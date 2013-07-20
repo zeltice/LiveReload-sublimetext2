@@ -16,3 +16,5 @@ Installing
 2.) In Sublime Text 2, navigate to Preferences -> Browse Packages.  Find and open "LiveReload" folder.
 
 3.) Replace the contents of livereload_st2.py with the contents of this fork's livereload_st2.py
+
+4.) Close then restart Sublime Text 2.
