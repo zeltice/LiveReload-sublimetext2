@@ -80,22 +80,14 @@ class CompassThread(threading.Thread):
 
     def run(self):
       global LivereloadFactory
-      print 'compass compile ' + self.dirname
-
-      # autocreate config.rb for compass
-      if not os.path.exists(os.path.join(self.dirname, "config.rb")):
-        print "Generating config.rb"
-        shutil.copy(os.path.join(sublime.packages_path(), "LiveReload","assets","config.rb"), self.dirname)
-
-      # compass compile
-      p = subprocess.Popen(['compass compile ' + self.dirname.replace('\\','/')],shell=True,  stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT )
-      if p.stdout.read() :
-        self.LivereloadFactory.send_all(json.dumps(["refresh", {
-              "path": self.filename.replace('\\','/'),
-              "apply_js_live": True,
-              "apply_css_live": True,
-              "apply_images_live": True
-        }]))
+      fname = self.filename.replace('\\','/')
+      stdout = "overwrite " + fname
+      self.LivereloadFactory.send_all(json.dumps(["refresh", {
+            "path": fname,
+            "apply_js_live": True,
+            "apply_css_live": True,
+            "apply_images_live": True
+      }]))
 
 
 class WebSocketServer:
